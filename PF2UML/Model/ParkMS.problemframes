@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problemframes:ProblemFrames xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:problemframes="http://www.gxnu.edu.re/problemframes">
+  <domain name="ParkMS" t2="machine"/>
+  <domain name="Park" isClass="true" descriptionReference="//@description.0"/>
+  <domain name="ParkRecord" isClass="true" descriptionReference="//@description.1"/>
+  <domain name="Vehicle" isClass="true" descriptionReference="//@description.2"/>
+  <domain name="Driver" isActor="true" t1="biddable"/>
+  <domain name="SystemManager" isActor="true" t1="biddable"/>
+  <domain name="ParkManager" isActor="true" t1="biddable"/>
+  <domain name="Member" isClass="true" t1="biddable" descriptionReference="//@description.3"/>
+  <requirement name="setPrice" isUseCase="true" service="SetPriceService"/>
+  <requirement name="getHistory" isUseCase="true" service="GetHistoryService"/>
+  <requirement name="manuallyAllowEntry" isUseCase="true" service="ManuallyAllowEntryService"/>
+  <requirement name="manuallyAllowOut" isUseCase="true" service="ManuallyAllowOutService"/>
+  <requirement name="openPark" isUseCase="true" service="ManageParkCRUDService"/>
+  <requirement name="closePark" isUseCase="true" service="ManageVehicleCRUDService"/>
+  <requirement name="automaticEntry" isUseCase="true" service="AutomaticEntryService"/>
+  <requirement name="automaticOut" isUseCase="true" service="AutomaticOutService"/>
+  <requirement name="register" isUseCase="true" service="RegisterService"/>
+  <requirement name="recharge" isUseCase="true" service="RechargeService"/>
+  <requirement name="ParkMSSystem" service="ParkMSSystem"/>
+  <interface name="a" targetDomain="//@domain.0" sourceDomain="//@domain.5">
+    <phenomenon xsi:type="problemframes:Event" name="setSmallPrice" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="setLargePrice" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="setMotoPrice" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="getHistoryByPlateNumber" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="getHistoryByEntryTime" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="getHistoryByOutTime" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="getHistoryByMember" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="parkID" belong="//@interface.0/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="parkID" belong="//@interface.0/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="parkID" belong="//@interface.0/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="price" belong="//@interface.0/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="price" belong="//@interface.0/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="price" belong="//@interface.0/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="plateNumber" belong="//@interface.0/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="from" belong="//@interface.0/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="from" belong="//@interface.0/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="to" belong="//@interface.0/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="to" belong="//@interface.0/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="memberID" event="//@interface.0/@phenomenon.6"/>
+  </interface>
+  <interface name="e" targetDomain="//@domain.1" sourceDomain="//@domain.6">
+    <phenomenon xsi:type="problemframes:Event" name="manuallyAllowOut" ascription="//@requirement.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="ManuallyAllowEntry" ascription="//@requirement.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="plateNumber" belong="//@interface.1/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="plateNumber" belong="//@interface.1/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="time" ascription="//@requirement.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="time" ascription="//@requirement.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="type" belong="//@interface.1/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="createPark" ascription="//@requirement.4"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryPark" ascription="//@requirement.4"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyPark" ascription="//@requirement.4"/>
+    <phenomenon xsi:type="problemframes:Event" name="deletePark" ascription="//@requirement.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.10"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.1/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.1/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="location" belong="//@interface.1/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="location" belong="//@interface.1/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="smallprice" belong="//@interface.1/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="smallprice" belong="//@interface.1/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="largeprice" belong="//@interface.1/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="largeprice" belong="//@interface.1/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="motoprice" belong="//@interface.1/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="motoprice" belong="//@interface.1/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="createVehicle" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryVehicle" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyVehicle" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteVehicle" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.25"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.26"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.27"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.1/@phenomenon.28"/>
+    <phenomenon xsi:type="problemframes:Value" name="platenumber" belong="//@interface.1/@phenomenon.25"/>
+    <phenomenon xsi:type="problemframes:Value" name="platenumber" belong="//@interface.1/@phenomenon.27"/>
+    <phenomenon xsi:type="problemframes:Value" name="type" belong="//@interface.1/@phenomenon.27"/>
+    <phenomenon xsi:type="problemframes:Value" name="type" belong="//@interface.1/@phenomenon.25"/>
+    <phenomenon xsi:type="problemframes:Event" name="openPark" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="closePark" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Value" name="parkID" belong="//@interface.1/@phenomenon.37"/>
+    <phenomenon xsi:type="problemframes:Value" name="parkID" belong="//@interface.1/@phenomenon.38"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentPark" ascription="//@requirement.10" t1="String"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentParkRecord" ascription="//@requirement.10" t1="String"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentMember" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentPayment" ascription="//@requirement.10" t1="Real"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+  </interface>
+  <interface name="i" targetDomain="//@domain.3" sourceDomain="//@domain.4">
+    <phenomenon xsi:type="problemframes:Event" name="recharge" ascription="//@requirement.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="memberID" belong="//@interface.2/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="amount" ascription="//@requirement.9" belong="//@interface.2/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="registerMember" ascription="//@requirement.8"/>
+    <phenomenon xsi:type="problemframes:Event" name="registerVehicle" ascription="//@requirement.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="memberID" belong="//@interface.2/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.2/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="vehicleID" belong="//@interface.2/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="plateNumber" belong="//@interface.2/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="type" belong="//@interface.2/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Event" name="scanPlateNumber" ascription="//@requirement.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="onlinePay" ascription="//@requirement.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="plateNumber" belong="//@interface.2/@phenomenon.10"/>
+    <phenomenon xsi:type="problemframes:Value" name="time" belong="//@interface.2/@phenomenon.10"/>
+    <phenomenon xsi:type="problemframes:Value" name="memberID" belong="//@interface.2/@phenomenon.11"/>
+    <phenomenon xsi:type="problemframes:Event" name="automaticEntry" ascription="//@requirement.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="plateNumber" belong="//@interface.2/@phenomenon.15"/>
+    <phenomenon xsi:type="problemframes:Value" name="time" belong="//@interface.2/@phenomenon.15"/>
+    <phenomenon xsi:type="problemframes:Value" name="RecordID" ascription="//@requirement.6"/>
+    <phenomenon name="RegisterSSDCallMessage3" isShared="true" ascription="//@requirement.8" event="//@interface.2/@phenomenon.4"/>
+  </interface>
+  <interface name="d" targetDomain="//@domain.2" sourceDomain="//@domain.1">
+    <phenomenon xsi:type="problemframes:Relation" name="OwningRecords" observed="//@domain.1" controlled="//@domain.2"/>
+    <phenomenon xsi:type="problemframes:Relation" name="OwnedPark" observed="//@domain.2" controlled="//@domain.1"/>
+    <phenomenon name="AutomaticOutSSDCallMessage3" isShared="true" ascription="//@requirement.7" event="//@interface.2/@phenomenon.11"/>
+  </interface>
+  <interface name="b" targetDomain="//@domain.1" sourceDomain="//@domain.0"/>
+  <interface name="c" targetDomain="//@domain.2" sourceDomain="//@domain.0"/>
+  <interface name="g" targetDomain="//@domain.2" sourceDomain="//@domain.3">
+    <phenomenon name="AutomaticOutSSDCallMessage1" isShared="true" ascription="//@requirement.7" event="//@interface.2/@phenomenon.10"/>
+  </interface>
+  <interface name="h" targetDomain="//@domain.3" sourceDomain="//@domain.7">
+    <phenomenon xsi:type="problemframes:Relation" name="OwningVehicles" observed="//@domain.7" controlled="//@domain.3"/>
+    <phenomenon xsi:type="problemframes:Relation" name="OwnedMember" observed="//@domain.3" controlled="//@domain.7"/>
+    <phenomenon name="RegisterSSDCallMessage1" isShared="true" ascription="//@requirement.8" event="//@interface.2/@phenomenon.3"/>
+  </interface>
+  <interface name="f" targetDomain="//@domain.7" sourceDomain="//@domain.1">
+    <phenomenon xsi:type="problemframes:Relation" name="OwningMembers" observed="//@domain.1" controlled="//@domain.7"/>
+    <phenomenon xsi:type="problemframes:Relation" name="Parks" observed="//@domain.7" controlled="//@domain.1"/>
+  </interface>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.2" reference="//@domain.6"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.3" reference="//@domain.6"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.4" reference="//@domain.6"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.5" reference="//@domain.6"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.0" reference="//@domain.5"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.1" reference="//@domain.5"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.6" reference="//@domain.4"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.7" reference="//@domain.4"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.8" reference="//@domain.4"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.9" reference="//@domain.4"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.10" reference="//@domain.6"/>
+  <description name="   Park Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="String" name="Location"/>
+    <domainAttribute type="Real" name="SmallPrice"/>
+    <domainAttribute type="Real" name="LargePrice"/>
+    <domainAttribute type="Real" name="MotoPrice"/>
+    <domainAttribute type="Boolean" name="IsOpened"/>
+  </description>
+  <description name="ParkRecord Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="PlateNumber"/>
+    <domainAttribute name="EntryTime"/>
+    <domainAttribute name="OutTime"/>
+    <domainAttribute type="Boolean" name="IsParking"/>
+    <domainAttribute type="Real" name="TotalPayment"/>
+    <domainAttribute type="String" name="Description"/>
+  </description>
+  <description name="Vehicle Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="PlateNumber"/>
+  </description>
+  <description name="Member Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="Real" name="Balance"/>
+  </description>
+</problemframes:ProblemFrames>

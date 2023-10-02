@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problemframes:ProblemFrames xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:problemframes="http://www.gxnu.edu.re/problemframes">
+  <domain name="CoCoME" t2="machine"/>
+  <domain name="Payment" isClass="true" descriptionReference="//@description.2"/>
+  <domain name="Sale" isClass="true" descriptionReference="//@description.10"/>
+  <domain name="Store" isClass="true" descriptionReference="//@description.11"/>
+  <domain name="ProductCatalog" isClass="true" descriptionReference="//@description.7"/>
+  <domain name="CardPayment" isClass="true" descriptionReference="//@description.0"/>
+  <domain name="CashPayment" isClass="true" descriptionReference="//@description.1"/>
+  <domain name="Supplier" isClass="true" descriptionReference="//@description.3"/>
+  <domain name="OrderProduct" isClass="true" descriptionReference="//@description.4"/>
+  <domain name="OrderEntry" isClass="true" descriptionReference="//@description.5"/>
+  <domain name="Item" isClass="true" descriptionReference="//@description.6"/>
+  <domain name="CashDesk" descriptionReference="//@description.9"/>
+  <domain name="SalesLineItem" isClass="true" descriptionReference="//@description.8"/>
+  <domain name="Cashier" isClass="true" isActor="true" t1="biddable" descriptionReference="//@description.12"/>
+  <domain name="Administrator" isActor="true" t1="biddable"/>
+  <domain name="StoreManager" isActor="true" t1="biddable"/>
+  <requirement name="processSale" isUseCase="true" service="ProcessSaleService"/>
+  <requirement name="openCashDesk" isUseCase="true"/>
+  <requirement name="closeCashDesk" isUseCase="true"/>
+  <requirement name="orderProducts" isUseCase="true" service="CoCoMEOrderProducts"/>
+  <requirement name="receiveOrderedProduct" isUseCase="true"/>
+  <requirement name="showStockReports" isUseCase="true" service="CoCoMESystem"/>
+  <requirement name="changePrice" isUseCase="true"/>
+  <requirement name="closeStore" isUseCase="true"/>
+  <requirement name="listSuppliers" isUseCase="true"/>
+  <requirement name="openStore" isUseCase="true"/>
+  <requirement name="manageStore" isUseCase="true" service="ManageStoreCRUDService"/>
+  <requirement name="manageProductCatalog" isUseCase="true" service="ManageProductCatalogCRUDService"/>
+  <requirement name="manageCashDesk" isUseCase="true" service="ManageCashDeskCRUDService"/>
+  <requirement name="manageCashier" isUseCase="true" service="ManageCashierCRUDService"/>
+  <requirement name="manageItem" isUseCase="true" service="ManageItemCRUDService"/>
+  <requirement name="manageSupplier" isUseCase="true" service="ManageSupplierCRUDService"/>
+  <interface name="a" targetDomain="//@domain.5" sourceDomain="//@domain.1">
+    <phenomenon xsi:type="problemframes:Event" name="makeCardPayment" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="cardAccountNumber" belong="//@interface.0/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="expiryDate" belong="//@interface.0/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="fee" belong="//@interface.0/@phenomenon.0"/>
+    <phenomenon name="makeCardPayment" isShared="true" ascription="//@requirement.0" event="//@interface.0/@phenomenon.0"/>
+  </interface>
+  <interface name="b" targetDomain="//@domain.6" sourceDomain="//@domain.1">
+    <phenomenon xsi:type="problemframes:Event" name="makeCashPayment" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="amount" belong="//@interface.1/@phenomenon.0"/>
+    <phenomenon name="makeCashPayment" isShared="true" ascription="//@requirement.0" event="//@interface.1/@phenomenon.0"/>
+  </interface>
+  <interface name="c" targetDomain="//@domain.2" sourceDomain="//@domain.1">
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedSale" observed="//@domain.1" controlled="//@domain.2"/>
+    <phenomenon xsi:type="problemframes:Relation" name="AssoicatedPayment" observed="//@domain.2" controlled="//@domain.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentSaleLine" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentSale" ascription="//@requirement.0" t1="String"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentPaymentMethod" ascription="//@requirement.0" t1="Boolean"/>
+    <phenomenon xsi:type="problemframes:State" name="paymentMethodAlt" controlled="//@domain.1" ascription="//@requirement.0" Combined="alt"/>
+    <phenomenon xsi:type="problemframes:Role" name="cash" controlled="//@domain.1" ascription="//@requirement.0" Combined="alt"/>
+    <phenomenon xsi:type="problemframes:Role" name="card" controlled="//@domain.1" ascription="//@requirement.0" Combined="alt"/>
+  </interface>
+  <interface name="j" targetDomain="//@domain.11" sourceDomain="//@domain.2">
+    <phenomenon xsi:type="problemframes:Relation" name="ContainedSales" observed="//@domain.11" controlled="//@domain.2"/>
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedCashDesk" observed="//@domain.2" controlled="//@domain.11"/>
+  </interface>
+  <interface name="d" targetDomain="//@domain.3" sourceDomain="//@domain.2">
+    <phenomenon xsi:type="problemframes:Relation" name="Belongedstore" observed="//@domain.2" controlled="//@domain.3"/>
+    <phenomenon xsi:type="problemframes:Relation" name="Sales" observed="//@domain.3" controlled="//@domain.2"/>
+    <phenomenon xsi:type="problemframes:Event" name="makeNewSale" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="endSale" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="changePrice" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="receiveOrderedProduct" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.4/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="newPrice" belong="//@interface.4/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="orderID" belong="//@interface.4/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentCashDesk" ascription="//@requirement.5" t1="String"/>
+    <phenomenon name="makeNewSale" isShared="true" ascription="//@requirement.0" event="//@interface.4/@phenomenon.2"/>
+    <phenomenon name="endSale" isShared="true" ascription="//@requirement.0" event="//@interface.4/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Role" name="hasMoreItems" controlled="//@domain.10" ascription="//@requirement.0" Combined="loop"/>
+  </interface>
+  <interface name="i" targetDomain="//@domain.12" sourceDomain="//@domain.2">
+    <phenomenon xsi:type="problemframes:Relation" name="ContainedSalesLine" observed="//@domain.2" controlled="//@domain.12"/>
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedSale" observed="//@domain.12" controlled="//@domain.2"/>
+  </interface>
+  <interface name="k" targetDomain="//@domain.10" sourceDomain="//@domain.12">
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedItem" observed="//@domain.12" controlled="//@domain.10"/>
+  </interface>
+  <interface name="o" targetDomain="//@domain.9" sourceDomain="//@domain.10">
+    <phenomenon xsi:type="problemframes:Relation" name="Item" observed="//@domain.9" controlled="//@domain.10"/>
+  </interface>
+  <interface name="p" targetDomain="//@domain.8" sourceDomain="//@domain.9">
+    <phenomenon xsi:type="problemframes:Relation" name="ContainedEntries" observed="//@domain.8" controlled="//@domain.9"/>
+    <phenomenon xsi:type="problemframes:Event" name="makeNewOrder" ascription="//@requirement.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="listAllOutOfStoreProducts" ascription="//@requirement.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="orderItem" ascription="//@requirement.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="chooseSupplier" ascription="//@requirement.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="placeOrder" ascription="//@requirement.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="orderid" belong="//@interface.8/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.8/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="quantity" belong="//@interface.8/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="supplierID" belong="//@interface.8/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentOrderProduct" ascription="//@requirement.3" t1="String"/>
+  </interface>
+  <interface name="q" targetDomain="//@domain.7" sourceDomain="//@domain.8">
+    <phenomenon xsi:type="problemframes:Relation" name="Supplier" observed="//@domain.8" controlled="//@domain.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="createSupplier" ascription="//@requirement.15"/>
+    <phenomenon xsi:type="problemframes:Event" name="querySupplier" ascription="//@requirement.15"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifySupplier" ascription="//@requirement.15"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteSupplier" ascription="//@requirement.15"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.9/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.9/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.9/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.9/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.9/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.9/@phenomenon.1"/>
+  </interface>
+  <interface name="w" targetDomain="//@domain.11" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Relation" name="AssociationCashdeskes" observed="//@domain.3" controlled="//@domain.11"/>
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedStore" observed="//@domain.11" controlled="//@domain.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="createCashDesk" ascription="//@requirement.12"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryCashDesk" ascription="//@requirement.12"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyCashDesk" ascription="//@requirement.12"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteCashDesk" ascription="//@requirement.12"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.10/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.10/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.10/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.10/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.10/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.10/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="isopened" belong="//@interface.10/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="isopened" belong="//@interface.10/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Event" name="openCashDesk" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="closeCashDesk" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="cashDeskID" belong="//@interface.10/@phenomenon.14"/>
+    <phenomenon xsi:type="problemframes:Value" name="cashDeskID" belong="//@interface.10/@phenomenon.15"/>
+  </interface>
+  <interface name="n" targetDomain="//@domain.4" sourceDomain="//@domain.10">
+    <phenomenon xsi:type="problemframes:Relation" name="ContainedItems" observed="//@domain.4" controlled="//@domain.10"/>
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedCatalog" observed="//@domain.10" controlled="//@domain.4"/>
+  </interface>
+  <interface name="m" targetDomain="//@domain.4" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedCatalog" observed="//@domain.3" controlled="//@domain.4"/>
+    <phenomenon xsi:type="problemframes:Event" name="createProductCatalog" ascription="//@requirement.11"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryProductCatalog" ascription="//@requirement.11"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyProductCatalog" ascription="//@requirement.11"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteProductCatalog" ascription="//@requirement.11"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.12/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.12/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.12/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.12/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.12/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.12/@phenomenon.3"/>
+  </interface>
+  <interface name="s" targetDomain="//@domain.13" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Relation" name="Cashiers" observed="//@domain.3" controlled="//@domain.13"/>
+    <phenomenon xsi:type="problemframes:Relation" name="WorkedStore" observed="//@domain.13" controlled="//@domain.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="createCashier" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryCashier" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyCashier" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteCashier" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.13/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.13/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.13/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.13/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.13/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" event="//@interface.13/@phenomenon.4"/>
+  </interface>
+  <interface name="l" targetDomain="//@domain.10" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Relation" name="Items" observed="//@domain.3" controlled="//@domain.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="createItem" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryItem" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyItem" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteItem" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" event="//@interface.14/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" event="//@interface.14/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.14/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="price" belong="//@interface.14/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="price" belong="//@interface.14/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="stocknumber" belong="//@interface.14/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="stocknumber" belong="//@interface.14/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="orderprice" belong="//@interface.14/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="orderprice" belong="//@interface.14/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="enterItem" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.17"/>
+    <phenomenon xsi:type="problemframes:Value" name="quantity" belong="//@interface.14/@phenomenon.17"/>
+    <phenomenon name="enterItem" isShared="true" ascription="//@requirement.0" event="//@interface.14/@phenomenon.17"/>
+    <phenomenon xsi:type="problemframes:State" name="enterItemLoop" controlled="//@domain.10" ascription="//@requirement.0" Combined="loop"/>
+  </interface>
+  <interface name="r" targetDomain="//@domain.15" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Event" name="openStore" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="closeStore" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="storeID" belong="//@interface.15/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="storeID" belong="//@interface.15/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="listSuppliers" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="showStockReports" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="CurrentStore" ascription="//@requirement.5" t1="String"/>
+  </interface>
+  <interface name="g" targetDomain="//@domain.3" sourceDomain="//@domain.14">
+    <phenomenon xsi:type="problemframes:Event" name="createStore" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryStore" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyStore" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteStore" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.16/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.16/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.16/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="id" belong="//@interface.16/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.16/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.16/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="address" event="//@interface.16/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="address" event="//@interface.16/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="isopened" belong="//@interface.16/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="isopened" belong="//@interface.16/@phenomenon.0"/>
+  </interface>
+  <interface name="e" targetDomain="//@domain.2" sourceDomain="//@domain.0"/>
+  <interface name="f" targetDomain="//@domain.3" sourceDomain="//@domain.0"/>
+  <interface name="h" targetDomain="//@domain.14" sourceDomain="//@domain.0"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.0" reference="//@domain.13"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.1" reference="//@domain.13"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.2" reference="//@domain.13"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.3" reference="//@domain.15"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.4" reference="//@domain.15"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.5" reference="//@domain.15"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.6" reference="//@domain.15"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.8" reference="//@domain.15"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.9" reference="//@domain.15"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.7" reference="//@domain.15"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.10" reference="//@domain.14"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.11" reference="//@domain.14"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.12" reference="//@domain.14"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.13" reference="//@domain.14"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.14" reference="//@domain.14"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.15" reference="//@domain.14"/>
+  <description name="CardPayment Information">
+    <domainAttribute type="Real" name="Balance"/>
+  </description>
+  <description name="CashPayment Information">
+    <domainAttribute type="String" name="CardAccountNumber"/>
+    <domainAttribute name="ExpiryDate"/>
+  </description>
+  <description name="Payment Information">
+    <domainAttribute type="Real" name="AmountTendered"/>
+  </description>
+  <description name="Supplier Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="Name"/>
+  </description>
+  <description name="OrderProduct Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute name="Time"/>
+    <domainAttribute name="OrderStatus"/>
+    <domainAttribute type="Real" name="Amount"/>
+  </description>
+  <description name="OrderEntry Information">
+    <domainAttribute name="Quantity"/>
+    <domainAttribute type="Real" name="SubAmount"/>
+  </description>
+  <description name=" Item  Information">
+    <domainAttribute name="Barcode"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="Real" name="Price"/>
+    <domainAttribute name="StockNumber"/>
+    <domainAttribute type="Real" name="OrderPrice"/>
+  </description>
+  <description name="ProductCatalog Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="Name"/>
+  </description>
+  <description name="SalesLineItem Information">
+    <domainAttribute name="Quantity"/>
+    <domainAttribute type="Real" name="Subamount"/>
+  </description>
+  <description name="CashDesk Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="Boolean" name="IsOpened"/>
+  </description>
+  <description name="   Sale Information">
+    <domainAttribute name="Time"/>
+    <domainAttribute type="Boolean" name="IsComplete"/>
+    <domainAttribute type="Real" name="Amount"/>
+    <domainAttribute type="Boolean" name="IsReadytoPay"/>
+  </description>
+  <description name=" Store Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="String" name="Address"/>
+    <domainAttribute type="Boolean" name="IsOpened"/>
+  </description>
+  <description name="Cashier Information">
+    <domainAttribute name="Id"/>
+    <domainAttribute type="String" name="Name"/>
+  </description>
+</problemframes:ProblemFrames>

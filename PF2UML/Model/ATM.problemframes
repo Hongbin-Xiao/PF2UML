@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problemframes:ProblemFrames xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:problemframes="http://www.gxnu.edu.re/problemframes" name="AutomatedTeller">
+  <domain name="ATM" t2="machine"/>
+  <domain name="Customer" isClass="true" isActor="true" t1="biddable" descriptionReference="//@description.0"/>
+  <domain name="BankClerk" isActor="true" t1="biddable"/>
+  <domain name="BankCard" isClass="true" descriptionReference="//@description.1"/>
+  <domain name="CardReader"/>
+  <domain name="Indicator"/>
+  <domain name="BankServer"/>
+  <domain name="Printer"/>
+  <domain name="Currency Detector"/>
+  <domain name="Input devices"/>
+  <domain name="Transcation" isClass="true" t1="lexical" descriptionReference="//@description.2"/>
+  <requirement name="manage User" isUseCase="true" service="ManageUserCRUDService"/>
+  <requirement name="manage BankCard" isUseCase="true" service="ManageBankCardCRUDService"/>
+  <requirement name="withdrawCash" isUseCase="true" service="AutomatedTellerMachineSystem">
+    <rqref requirementRef="//@requirement.5" isInclude="true"/>
+  </requirement>
+  <requirement name="checkBalance" isUseCase="true" service="checkBalance">
+    <rqref requirementRef="//@requirement.5" isInclude="true"/>
+  </requirement>
+  <requirement name="depositFunds" isUseCase="true" service="depositFunds"/>
+  <requirement name=" card ldentification" isUseCase="true"/>
+  <interface name="c" targetDomain="//@domain.4" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Event" name="inputCard" ascription="//@requirement.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="cardid" belong="//@interface.0/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="ejectCard" ascription="//@requirement.2"/>
+    <phenomenon name="callMessage1" isShared="true" ascription="//@requirement.2" event="//@interface.0/@phenomenon.0"/>
+    <phenomenon name="callMessage9" isShared="true" ascription="//@requirement.2" event="//@interface.0/@phenomenon.2"/>
+    <phenomenon name="CheckBalanceInteractionCallMessage1" isShared="true" ascription="//@requirement.3" event="//@interface.0/@phenomenon.0"/>
+    <phenomenon name="CheckBalanceInteractionCallMessage7" isShared="true" ascription="//@requirement.3" event="//@interface.0/@phenomenon.2"/>
+    <phenomenon name="DepositFundsInteractionCallMessage1" isShared="true" ascription="//@requirement.4" event="//@interface.0/@phenomenon.0"/>
+    <phenomenon name="DepositFundsInteractionCallMessage9" isShared="true" ascription="//@requirement.4" event="//@interface.0/@phenomenon.2"/>
+  </interface>
+  <interface name="d" targetDomain="//@domain.4" sourceDomain="//@domain.0">
+    <phenomenon xsi:type="problemframes:Event" name="cardIdentification" ascription="//@requirement.2"/>
+  </interface>
+  <interface name="f" targetDomain="//@domain.5" sourceDomain="//@domain.0"/>
+  <interface name="k" targetDomain="//@domain.7" sourceDomain="//@domain.0">
+    <phenomenon xsi:type="problemframes:Event" name="printReceipt" ascription="//@requirement.2"/>
+    <phenomenon name="callMessage7" isShared="true" ascription="//@requirement.2" event="//@interface.3/@phenomenon.0"/>
+    <phenomenon name="DepositFundsInteractionCallMessage7" isShared="true" ascription="//@requirement.4" event="//@interface.3/@phenomenon.0"/>
+  </interface>
+  <interface name="i" targetDomain="//@domain.8" sourceDomain="//@domain.1"/>
+  <interface name="j" targetDomain="//@domain.0" sourceDomain="//@domain.8"/>
+  <interface name="l" targetDomain="//@domain.6" sourceDomain="//@domain.0"/>
+  <interface name="m" targetDomain="//@domain.2" sourceDomain="//@domain.6">
+    <phenomenon xsi:type="problemframes:Event" name="createBankCard" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryBankCard" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyBankCard" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteBankCard" ascription="//@requirement.1"/>
+    <phenomenon xsi:type="problemframes:Event" name="createUser" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryUser" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyUser" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteUser" ascription="//@requirement.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="cardid" belong="//@interface.7/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="cardstatus" belong="//@interface.7/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="catalog" belong="//@interface.7/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.7/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="balance" belong="//@interface.7/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="userid" belong="//@interface.7/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.7/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="address" belong="//@interface.7/@phenomenon.4"/>
+  </interface>
+  <interface name="h" targetDomain="//@domain.9" sourceDomain="//@domain.0"/>
+  <interface name="a" targetDomain="//@domain.3" sourceDomain="//@domain.1">
+    <phenomenon xsi:type="problemframes:Relation" name=" Owned Card" observed="//@domain.3" controlled="//@domain.1"/>
+    <phenomenon xsi:type="problemframes:Relation" name="BelongedUser" observed="//@domain.1" controlled="//@domain.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="depositFunds" observed="//@domain.1" controlled="//@domain.3" ascription="//@requirement.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="quantity" observed="//@domain.1" controlled="//@domain.3" belong="//@interface.9/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="IsDeposit" ascription="//@requirement.2" t1="Boolean"/>
+    <phenomenon xsi:type="problemframes:Value" name="IsWithdraw" ascription="//@requirement.2" t1="Boolean"/>
+    <phenomenon xsi:type="problemframes:Value" name="DepositedNumber" ascription="//@requirement.2" t1="Real"/>
+    <phenomenon name="DepositFundsInteractionCallMessage5" isShared="true" ascription="//@requirement.4" event="//@interface.9/@phenomenon.2"/>
+  </interface>
+  <interface name="b" targetDomain="//@domain.10" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Relation" name="Involved Card" observed="//@domain.3" controlled="//@domain.10"/>
+    <phenomenon xsi:type="problemframes:Relation" name="Has" observed="//@domain.10" controlled="//@domain.3"/>
+    <phenomenon xsi:type="problemframes:Event" name="withdrawCash" ascription="//@requirement.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="quantity" belong="//@interface.10/@phenomenon.2"/>
+    <phenomenon name="callMessage5" isShared="true" ascription="//@requirement.2" event="//@interface.10/@phenomenon.2"/>
+  </interface>
+  <interface name="e" targetDomain="//@domain.1" sourceDomain="//@domain.5">
+    <phenomenon xsi:type="problemframes:Event" name="checkBalance" alternativeEvent="//@interface.10/@phenomenon.2"/>
+    <phenomenon name="CheckBalanceInteractionCallMessage5" isShared="true" ascription="//@requirement.3" event="//@interface.11/@phenomenon.0"/>
+  </interface>
+  <interface name="g" targetDomain="//@domain.1" sourceDomain="//@domain.9">
+    <phenomenon xsi:type="problemframes:Event" name="inputPassword" observed="//@domain.1" controlled="//@domain.9" ascription="//@requirement.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" ascription="//@requirement.2" belong="//@interface.12/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="PasswordValidated" ascription="//@requirement.2" t1="Boolean"/>
+    <phenomenon xsi:type="problemframes:Value" name="WithdrawedNumber" ascription="//@requirement.2" t1="Real"/>
+    <phenomenon xsi:type="problemframes:Value" name="InputCard" ascription="//@requirement.2" t1="Boolean"/>
+    <phenomenon xsi:type="problemframes:Value" name="CardIDValidated" ascription="//@requirement.2" t1="Boolean"/>
+    <phenomenon name="callMessage3" isShared="true" ascription="//@requirement.2" event="//@interface.12/@phenomenon.0"/>
+    <phenomenon name="CheckBalanceInteractionCallMessage3" isShared="true" ascription="//@requirement.3" event="//@interface.12/@phenomenon.0"/>
+    <phenomenon name="DepositFundsInteractionCallMessage3" isShared="true" ascription="//@requirement.4" event="//@interface.12/@phenomenon.0"/>
+  </interface>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.2" reference="//@domain.1"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.3" reference="//@domain.1"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.4" reference="//@domain.1"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.5" reference="//@domain.1"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.1" reference="//@domain.2"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.0" reference="//@domain.2"/>
+  <description name="Customer Attributes" domainRef="//@domain.1">
+    <domainAttribute name="CustomerID"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="String" name="Address"/>
+    <domainAttribute name="PhoneNumber"/>
+  </description>
+  <description name="Card Information" domainRef="//@domain.3">
+    <domainAttribute name="CardID"/>
+    <domainAttribute type="String" name="Catalog"/>
+    <domainAttribute name="Password"/>
+    <domainAttribute type="Real" name="Balance"/>
+  </description>
+  <description name="Translation Information" domainRef="//@domain.10">
+    <domainAttribute name="WithdrawedNum"/>
+    <domainAttribute type="Real" name="BalanceAfterwWithdraw"/>
+  </description>
+</problemframes:ProblemFrames>

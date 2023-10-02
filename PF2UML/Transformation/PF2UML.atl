@@ -1,0 +1,408 @@
+-- @path RE=/PF2UML/MetaModel/REMODEL.ecore
+-- @path PF=/PF2UML/MetaModel/problemframes.ecore
+module PF2UML;
+create OUT : RE from IN : PF;
+
+helper def: println(enu: OclAny): OclAny =
+	enu.debug();
+helper context PF!Relation def : isObserved() : Boolean = 
+	if self.observed.oclIsUndefined() or (not self.observed.isClass) then false else true endif;
+helper context PF!Relation def : isControlled() : Boolean = 
+	if self.controlled.oclIsUndefined() or (not self.controlled.isClass) then false else true endif;
+helper context PF!Relation def : isReference() : Boolean = 
+	 self.isObserved() and self.isControlled();
+helper context PF!Phenomenon def : isCombinedFragment() : Boolean=
+	if (self.Combined.toString()='loop') or (self.Combined.toString()='alt')  then true else false endif;
+
+helper context RE!Entity def : getEntity() : RE!Entity = 
+	self.name;
+
+helper context PF!RQReference def : getUCRelation() : String = 
+	if self.isExtend  then 'extend' else 'include' endif;
+helper context PF!RQReference def : getname() : String = 
+	self.requirementRef.name;
+
+rule ProblemFrames2ReModel{
+	from 
+	     pf:PF!ProblemFrames
+	to  
+	     re:RE!RequirementModel(
+	         DomainModel <- thisModule.PF2DomainModel(pf),
+			 UseCaseModel <- thisModule.PF2UsecaseModel(pf)
+	     )
+}
+--------------------------------------------------------------PF2DomainModel Start----------------------------------------------------------
+lazy rule PF2DomainModel {
+	from
+		PF : PF!ProblemFrames
+	to 
+		dm : RE!DomainModel (
+			name <- PF.name,
+			entity <- PF.domain ->select(e | e.isClass and (not e.descriptionReference.oclIsUndefined())).asSequence()
+			->collect(e | thisModule.Domain2Entity(e))
+		)
+}
+lazy rule Domain2Entity {
+	from
+		domain : PF!Domain
+	to 
+		entity : RE!Entity (
+			name <- domain.name,		
+			attributes <- domain.descriptionReference.domainAttribute 
+			-> collect(e | thisModule.Attribute2Attribute(e)),	
+			reference  <- PF!Relation.allInstances()->select(e | e.Combined.toString()='null')
+			->select(e | if not e.isReference() then false else e.observed.name=domain.name endif).asSequence()
+			->collect(e | thisModule.Relation2Reference(e))
+		)
+}
+
+lazy rule Attribute2Attribute {
+	from
+		pfattribute : PF!Attribute
+	to 
+		reattribute : RE!Attribute (
+			name <- pfattribute.name,
+			type <- attrType
+		),
+		attrType:RE!PrimitiveTypeCS(
+		      name <- if (pfattribute.toString()='Integer')
+		      	        then 'Integer'
+				           else if(pfattribute.type.toString()='Real')
+				        	   then 'Real'
+				        	       else if(pfattribute.type.toString()='Boolean')
+				        	    	     then 'Boolean'
+				        			     else'String'
+		                            endif
+	                        endif
+			          endif
+			
+		)
+}
+
+lazy rule Relation2Reference {
+	from
+		relation : PF!Relation
+	to 
+		reference : RE!Reference (
+			name <-  relation.name,
+			isAggregation <- true,
+			entity <- RE!Entity.allInstances()->select(e | e.name=relation.controlled.name)
+		)
+}
+---------------------------------------------------------------PF2DomainModel End---------------------------------------------------------
+---------------------------------------------------------------PF2UseCaseModel Start------------------------------------------------------
+lazy rule PF2UsecaseModel {
+	from
+		pf : PF!ProblemFrames
+	to 
+		um : RE!UseCaseModel (
+			name <- pf.name,
+			uc <- pf.requirement-> select(e | e.isUseCase).asSequence()->collect(e | thisModule.Requirement2UC(e)),
+			actor <- pf.domain->select(e | e.isActor).asSequence()->collect(e | thisModule.Domain2Actor(e)),
+			service <- pf.requirement->select(e | e.isUseCase and (not e.service.oclIsUndefined())).asSequence()->collect(e | thisModule.re2Service(e)),
+			interaction <- pf.requirement->select(e | e.isUseCase and (not e.service.oclIsUndefined())).asSequence()->collect(e | thisModule.requirement2Interaction(e))
+			
+			)
+}
+lazy rule Requirement2UC {
+	from
+		req : PF!Requirement
+	to 
+		uc : RE!UC (
+			name <- req.name,
+	     --relateduc <- req.rqref -> select(e | (not e.oclIsUndefined())).asSequence()->select(e | uc.name=e.requirementRef.name),
+			relateduc <- req.rqref -> select(e | (not e.oclIsUndefined())).asSequence()
+			        ->collect(e | RE!UC.allInstances()->select(uca | uca.name=e.requirementRef.name)),
+		    UCRelation <-req.rqref->select(e | (not e.oclIsUndefined())).asSequence()
+			        ->collect(e | e.getUCRelation())
+		)
+}
+
+lazy rule Domain2Actor {
+	from
+		domain : PF!Domain
+	to 
+		actor: RE!Actor (
+			name <- domain.name,
+			uc <- if not (PF!RequirementReference.allInstances() -> select(e | e.reference.name=domain.name).first().oclIsUndefined())
+				 then PF!RequirementReference.allInstances() -> select(e | e.reference.name=domain.name).asSequence() ->collect(e | RE!UC.allInstances()->select(uc | uc.name=e.source.name))
+				 else PF!RequirementConstraint.allInstances() -> select(e | e.constrained.name=domain.name).asSequence() ->collect(e | RE!UC.allInstances()->select(uc | uc.name=e.source.name))
+				 endif
+			
+		)
+		do{
+		thisModule.println(PF!RequirementReference.allInstances() -> select(e | e.reference.name=domain.name).first().oclIsUndefined());
+		}
+}
+---------------------------------------------------------------PF2UseCaseModel End---------------------------------------------------------
+---------------------------------------------------------------PF2Service    Start---------------------------------------------------------
+lazy rule re2Service {
+	from
+		re : PF!Requirement
+	to 
+		service : RE!Service (
+			name <- re.service,
+			operation <- PF!Event.allInstances() ->select(e | e.ascription=re)
+			->collect(e | thisModule.Event2Operation(e)),
+			temp_property <- PF!Value.allInstances()->select(e | e.ascription=re)
+			->collect(e | thisModule.Value2Attribute(e))
+		)
+-- 		do{
+--  		thisModule.println(service);	
+-- 		}
+}
+lazy rule Event2Operation {
+	from
+		event : PF!Event
+	to 
+		operation : RE!Operation (
+			name <- event.name,
+			parameter <- PF!Value.allInstances()->select(e | e.belong=event)
+			->collect(e | thisModule.Value2Parameter(e))
+		)
+}
+lazy rule Value2Attribute {
+	from
+		value : PF!Value
+	to 
+		attribute : RE!Attribute (
+			name <- value.name,
+			type <- attrType
+		),attrType:RE!PrimitiveTypeCS(
+		      name <- if (value.t1.toString()='Integer')
+		      	        then 'Integer'
+				           else if(value.t1.toString()='Real')
+				        	   then 'Real'
+				        	       else if(value.t1.toString()='Boolean')
+				        	    	     then 'Boolean'
+				        			     else'String'
+		                            endif
+	                        endif
+			          endif
+			
+		)
+		
+}
+
+lazy rule Value2Parameter {
+	from
+		value : PF!Value
+	to 
+		paramenter : RE!Parameter (
+			name <- value.name
+		)
+}
+---------------------------------------------------------------PF2Service      End---------------------------------------------------------
+---------------------------------------------------------------PF2SequenceModel Start------------------------------------------------------
+lazy rule requirement2Interaction {
+	from
+		pf : PF!Requirement(pf.isUseCase)
+	to 
+		interaction : RE!Interaction (
+			name <- pf.name,
+			
+			participants <- RE!Service.allInstances()->select(e | e.name=pf.service),
+			
+			participants <-if not (PF!RequirementReference.allInstances() -> select(e | e.source.name=pf.name).first().oclIsUndefined())
+				 then PF!RequirementReference.allInstances() -> select(e | e.source.name=pf.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.reference.name))
+				
+				 else PF!RequirementConstraint.allInstances() -> select(e | e.source.name=pf.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.constrained.name))
+				 endif,
+				 
+				 ends       <- PF!Phenomenon.allInstances()->select(e | e.ascription=pf and e.isShared =true)-> collect(e | thisModule.Phenomenon2ExcutionEndF(e)),
+				 ends       <- PF!Phenomenon.allInstances()->select(e | e.ascription=pf and e.isShared =true)-> collect(e | thisModule.Phenomenon2ExcutionEndS(e)), 
+				 ends       <- PF!Phenomenon.allInstances()->select(e | e.ascription=pf and e.isShared =true)-> collect(e | thisModule.Phenomenon2MessageEndR(e)),
+			     ends       <- PF!Phenomenon.allInstances()->select(e | e.ascription=pf and e.isShared =true)-> collect(e | thisModule.Phenomenon2MessageEndS(e)),
+			     ends       <- PF!State.allInstances()-> select(e | e.ascription=pf)-> select(e | e.isCombinedFragment())-> collect(e | thisModule.State2CombinedEndF(e)),
+			     ends       <- PF!State.allInstances()-> select(e | e.ascription=pf)-> select(e | e.isCombinedFragment())-> collect(e | thisModule.State2CombinedEndS(e)),
+	        	 ends       <- PF!Role.allInstances()->select(e | e.ascription=pf)-> collect(e | thisModule.Role2OperandEnd(e)),
+				 executions <- PF!Phenomenon.allInstances()->select(e | e.ascription=pf and e.isShared =true)->collect(e | thisModule.Phenomenon2execution(e)),
+				 messages   <- PF!Phenomenon.allInstances()->select(e | e.ascription=pf and e.isShared =true)->collect(e | thisModule.Phenomenon2Callmessages(e)),
+			     messages   <- PF!Phenomenon.allInstances()->select(e | e.ascription=pf and e.isShared =true)->collect(e | thisModule.Phenomenon2Returnmessages(e)),
+                 combinedFragments  <- PF!State.allInstances()-> select(e | e.ascription=pf)-> select(e | e.isCombinedFragment())->collect(e | thisModule.State2Combined(e))
+		)
+				do{
+		thisModule.println(PF!Phenomenon.allInstances()->select(e | e.ascription=pf));	
+		}
+}
+
+lazy rule Phenomenon2ExcutionEndS {
+	from
+		phe : PF!Phenomenon
+	to 
+		excutionends : RE!ExecutionEnd (
+			name <- phe.name+'StartEnd',
+			
+			execution <- RE!Execution.allInstances()
+			->select(e | e.name=phe.name),
+			
+			context <- RE!Service.allInstances()
+			->select(e | e.name=phe.ascription.service)
+		)
+}
+lazy rule Phenomenon2ExcutionEndF {
+	from
+		phe : PF!Phenomenon
+	to 
+		excutionends : RE!ExecutionEnd (
+			name <- phe.name+'FinishEnd',
+			
+			execution <- RE!Execution.allInstances()
+			->select(e | e.name=phe.name),
+			
+			context <- RE!Service.allInstances()
+			->select(e | e.name=phe.ascription.service)
+		)
+
+}
+lazy rule Phenomenon2MessageEndS {
+	from
+		phe : PF!Phenomenon
+	to 
+		messageend : RE!MessageEnd (
+			name <-phe.name+'SendingEnd',
+			context <- if not (PF!RequirementReference.allInstances() -> select(e | e.source.name=phe.ascription.name).first().oclIsUndefined())
+				 then PF!RequirementReference.allInstances() -> select(e | e.source.name=phe.ascription.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.reference.name))
+				
+				 else PF!RequirementConstraint.allInstances() -> select(e | e.source.name=phe.ascription.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.constrained.name))
+				 endif,
+			message <- RE!CallMessage.allInstances()
+			-> select(e | e.name=phe.name)
+		
+	)
+}
+lazy rule Phenomenon2MessageEndR {
+	from
+		phe : PF!Phenomenon
+	to 
+		messageend : RE!MessageEnd (
+			name <-phe.name+'ReturnReceivingEnd',
+			context <- if not (PF!RequirementReference.allInstances() -> select(e | e.source.name=phe.ascription.name).first().oclIsUndefined())
+				 then PF!RequirementReference.allInstances() -> select(e | e.source.name=phe.ascription.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.reference.name))
+				
+				 else PF!RequirementConstraint.allInstances() -> select(e | e.source.name=phe.ascription.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.constrained.name))
+				 endif,
+			message <- RE!CallMessage.allInstances()
+			-> select(e | e.name=phe.name+'Return')
+		
+	)
+}
+lazy rule State2CombinedEndF {
+	from
+		state : PF!State
+	to 
+		combinedendf : RE!CombinedFragmentEnd (
+		name <- state.name+state.Combined.toString()+'FinishEnd'
+		)
+}
+
+lazy rule State2CombinedEndS {
+	from
+		state : PF!State
+	to 
+		combinedendf : RE!CombinedFragmentEnd (
+		name <- state.name+state.Combined.toString()+'StartEnd'
+		)
+}
+
+lazy rule Role2OperandEnd {
+	from
+		role : PF!Role
+	to 
+		operandend : RE!OperandEnd (
+	    name <- role.name+'End'       
+	)
+}
+
+lazy rule Phenomenon2execution{
+	from
+		phe : PF!Phenomenon
+	to 
+		exe : RE!Execution (
+			end <- RE!ExecutionEnd.allInstances()
+			->select(e | e.name=phe.name+'FinishEnd'),
+			name <- phe.name,
+			owner <- RE!Service.allInstances()->select(e | e.name=phe.ascription.service),
+			start <- RE!ExecutionEnd.allInstances()
+			->select(e | e.name=phe.name+'StartEnd')
+		)
+}
+lazy rule Phenomenon2Callmessages {
+	from
+		phe : PF!Phenomenon
+	to 
+		call : RE!CallMessage (
+			name <- phe.name,
+			
+			op <-RE!Operation.allInstances()->select(e | e.name=phe.event.name),
+
+			
+			receivingEnd <- RE!ExecutionEnd.allInstances()
+			->select(e | e.name=phe.name+'StartEnd'),
+			
+			sendingEnd <- RE!MessageEnd.allInstances()
+			->select(e | e.name=phe.name+'SenderingEnd')
+		)
+}
+
+lazy rule Phenomenon2Returnmessages {
+	from
+		phe : PF!Phenomenon
+	to 
+		call : RE!ReturnMessage (
+			name <- phe.name,
+			
+		    invocationMessage <- RE!CallMessage.allInstances()
+			->select(e | e.name=phe.name),
+			
+			receivingEnd <- RE!ExecutionEnd.allInstances()
+			->select(e | e.name=phe.name+'ReturnReceiving'),
+			
+			sendingEnd <- RE!MessageEnd.allInstances()
+			->select(e | e.name=phe.name+'FinishEnd')
+		)
+}
+lazy rule State2Combined {
+	from                                                                                                                              
+		state : PF!State
+	to 
+		combined : RE!CombinedFragment (
+			name <- state.name+state.Combined.toString(),
+			coveredParticipants <- if not (PF!RequirementReference.allInstances() -> select(e | e.source.name=state.ascription.name).first().oclIsUndefined())
+				 then PF!RequirementReference.allInstances() -> select(e | e.source.name=state.ascription.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.reference.name))
+				
+				 else PF!RequirementConstraint.allInstances() -> select(e | e.source.name=state.ascription.name).asSequence() 
+				 ->collect(e | RE!Actor.allInstances()->select(ac | ac.name=e.constrained.name))
+				 endif,
+			
+			coveredParticipants <- RE!Service.allInstances()->select(e | e.name=state.ascription.name),
+			
+			finish <- RE!CombinedFragmentEnd.allInstances()
+			->select(e | e.name=state.name+state.Combined+'FinishEnd'),
+			
+			operator <- state.Combined.toString(),
+			
+		--	ownedOperands <- if phenomenon.isCombinedFragment() then PF!Event.allInstances()->select(e | e.controlled=phenomenon.controlled)->collect(e | thisModule.event2Operand(e,phenomenon)) else  'null' endif,
+			
+			start <- RE!CombinedFragmentEnd.allInstances()
+			->select(e | e.name=state.name+state.Combined.toString()+'Start'),
+			ownedOperands <- PF!Role.allInstances()->select(e | e.controlled=state.controlled)->collect(e | thisModule.Role2Operands(e))
+		--	ownedOperands <-  PF!Causality.allInstances() -> select(e | e.causeState.name=state.name).asSequence() ->collect(e | PF!Role.allInstances()->select(ro | ro.name=e.causeRole.name))->collect(e | thisModule.Role2Operands(e))
+		)
+}
+lazy rule Role2Operands{
+	from
+		role : PF!Role
+	to 
+		ope : RE!Operand (
+			name <- role.name          
+		)
+}
+---------------------------------------------------------------PF2SequenceModel end------------------------------------------------------
