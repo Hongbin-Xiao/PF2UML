@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rEMODEL:RequirementModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rEMODEL="http://www.mydreamy.net/requirementmodel/REMODEL">
+  <UseCaseModel>
+    <uc name="inquireRequest"/>
+    <uc name="score"/>
+    <uc name="raiseRepair"/>
+    <uc name="assignTask"/>
+    <uc name="manageDevice"/>
+    <uc name="manageUser"/>
+    <uc name="seekHelp"/>
+    <uc name="submitRepairResult"/>
+    <actor name="Staff" uc="//@UseCaseModel/@uc.0 //@UseCaseModel/@uc.1"/>
+    <actor name="Master" uc="//@UseCaseModel/@uc.2 //@UseCaseModel/@uc.3"/>
+    <actor name="Worker" uc="//@UseCaseModel/@uc.6 //@UseCaseModel/@uc.7"/>
+    <actor name="Admin" uc="//@UseCaseModel/@uc.5 //@UseCaseModel/@uc.4"/>
+    <actor name="Manager" uc="//@UseCaseModel/@uc.2"/>
+    <interaction name="raiseRepair" participants="//@UseCaseModel/@service.0 //@UseCaseModel/@actor.1">
+      <messages xsi:type="rEMODEL:CallMessage" name="RaiseRepairSSDCallMessage3" receivingEnd="//@UseCaseModel/@interaction.0/@ends.6" op="//@UseCaseModel/@service.0/@operation.0"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="RaiseRepairSSDCallMessage1" receivingEnd="//@UseCaseModel/@interaction.0/@ends.7" op="//@UseCaseModel/@service.0/@operation.1"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="RaiseRepairSSDCallMessage7" receivingEnd="//@UseCaseModel/@interaction.0/@ends.8" op="//@UseCaseModel/@service.0/@operation.2"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="RaiseRepairSSDCallMessage5" receivingEnd="//@UseCaseModel/@interaction.0/@ends.9" op="//@UseCaseModel/@service.0/@operation.3"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="RaiseRepairSSDCallMessage9" receivingEnd="//@UseCaseModel/@interaction.0/@ends.10" op="//@UseCaseModel/@service.0/@operation.4"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="RaiseRepairSSDCallMessage11" receivingEnd="//@UseCaseModel/@interaction.0/@ends.11" op="//@UseCaseModel/@service.0/@operation.5"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="RaiseRepairSSDCallMessage3" invocationMessage="//@UseCaseModel/@interaction.0/@messages.0"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="RaiseRepairSSDCallMessage1" invocationMessage="//@UseCaseModel/@interaction.0/@messages.1"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="RaiseRepairSSDCallMessage7" invocationMessage="//@UseCaseModel/@interaction.0/@messages.2"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="RaiseRepairSSDCallMessage5" invocationMessage="//@UseCaseModel/@interaction.0/@messages.3"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="RaiseRepairSSDCallMessage9" invocationMessage="//@UseCaseModel/@interaction.0/@messages.4"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="RaiseRepairSSDCallMessage11" invocationMessage="//@UseCaseModel/@interaction.0/@messages.5"/>
+      <executions name="RaiseRepairSSDCallMessage3" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.6" end="//@UseCaseModel/@interaction.0/@ends.0"/>
+      <executions name="RaiseRepairSSDCallMessage1" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.7" end="//@UseCaseModel/@interaction.0/@ends.1"/>
+      <executions name="RaiseRepairSSDCallMessage7" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.8" end="//@UseCaseModel/@interaction.0/@ends.2"/>
+      <executions name="RaiseRepairSSDCallMessage5" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.9" end="//@UseCaseModel/@interaction.0/@ends.3"/>
+      <executions name="RaiseRepairSSDCallMessage9" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.10" end="//@UseCaseModel/@interaction.0/@ends.4"/>
+      <executions name="RaiseRepairSSDCallMessage11" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.11" end="//@UseCaseModel/@interaction.0/@ends.5"/>
+      <combinedFragments name="combinedFragement1alt" operator="alt" coveredParticipants="//@UseCaseModel/@actor.1" finish="//@UseCaseModel/@interaction.0/@ends.24">
+        <ownedOperands name="condition1"/>
+      </combinedFragments>
+      <combinedFragments name="combinedFragement2alt" operator="alt" coveredParticipants="//@UseCaseModel/@actor.1" finish="//@UseCaseModel/@interaction.0/@ends.25">
+        <ownedOperands name="condition2"/>
+      </combinedFragments>
+      <combinedFragments name="combinedFragement3alt" operator="alt" coveredParticipants="//@UseCaseModel/@actor.1" finish="//@UseCaseModel/@interaction.0/@ends.26">
+        <ownedOperands name="condition3"/>
+      </combinedFragments>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage3FinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage1FinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage7FinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage5FinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage9FinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage11FinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage3StartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage1StartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage7StartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage5StartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage9StartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="RaiseRepairSSDCallMessage11StartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage3ReturnReceivingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage1ReturnReceivingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage7ReturnReceivingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage5ReturnReceivingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage9ReturnReceivingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage11ReturnReceivingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage3SendingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage1SendingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage7SendingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage5SendingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage9SendingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="RaiseRepairSSDCallMessage11SendingEnd" context="//@UseCaseModel/@actor.1"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="combinedFragement1altFinishEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="combinedFragement2altFinishEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="combinedFragement3altFinishEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="combinedFragement1altStartEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="combinedFragement2altStartEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="combinedFragement3altStartEnd"/>
+      <ends xsi:type="rEMODEL:OperandEnd" name="condition1End"/>
+      <ends xsi:type="rEMODEL:OperandEnd" name="condition2End"/>
+      <ends xsi:type="rEMODEL:OperandEnd" name="condition3End"/>
+    </interaction>
+    <interaction name="manageDevice" participants="//@UseCaseModel/@service.1 //@UseCaseModel/@actor.3"/>
+    <interaction name="submitRepairResult" participants="//@UseCaseModel/@service.2 //@UseCaseModel/@actor.2"/>
+    <service name="RaiseRepairService">
+      <operation name="managerApprove1"/>
+      <operation name="submitRequest"/>
+      <operation name="managerReject"/>
+      <operation name="masterApprove"/>
+      <operation name="managerApprove2"/>
+      <operation name="masterReject"/>
+    </service>
+    <service name="AirportSystem">
+      <operation name="createDevice">
+        <parameter name="id"/>
+        <parameter name="name"/>
+        <parameter name="location"/>
+        <parameter name="contactsid"/>
+      </operation>
+      <operation name="createStaff">
+        <parameter name="id"/>
+        <parameter name="name"/>
+        <parameter name="pswd"/>
+        <parameter name="phone"/>
+        <parameter name="role"/>
+        <parameter name="bossid"/>
+      </operation>
+    </service>
+    <service name="RepairService">
+      <operation name="feedback">
+        <parameter name="id"/>
+        <parameter name="sid"/>
+        <parameter name="score"/>
+        <parameter name="des"/>
+      </operation>
+      <operation name="approve">
+        <parameter name="sid"/>
+        <parameter name="rid"/>
+        <parameter name="reject"/>
+        <parameter name="suggestion"/>
+      </operation>
+      <operation name="finishRepair">
+        <parameter name="id"/>
+        <parameter name="sid"/>
+        <parameter name="did"/>
+        <parameter name="res"/>
+      </operation>
+    </service>
+  </UseCaseModel>
+  <DomainModel>
+    <entity name="Staff">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Password">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Phone">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Role">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <reference name="Boss" entity="//@DomainModel/@entity.0" isAggregation="true"/>
+    </entity>
+    <entity name="ApprovalHistory">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="StaffId">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Reject">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Boolean"/>
+      </attributes>
+      <attributes name="Suggestion">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+    </entity>
+    <entity name="Repair">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Repairname">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Price">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Description">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Score">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="FailTime">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Close">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Boolean"/>
+      </attributes>
+      <attributes name="Process">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Result">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <reference name="RelatedDevice" isAggregation="true"/>
+      <reference name="RaiseStaff" entity="//@DomainModel/@entity.0" isAggregation="true"/>
+      <reference name="History" entity="//@DomainModel/@entity.1" isAggregation="true"/>
+    </entity>
+    <entity name="Device">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Location">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <reference name="Contacts" entity="//@DomainModel/@entity.0" isAggregation="true"/>
+    </entity>
+  </DomainModel>
+</rEMODEL:RequirementModel>

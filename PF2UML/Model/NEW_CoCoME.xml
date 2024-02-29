@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rEMODEL:RequirementModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rEMODEL="http://www.mydreamy.net/requirementmodel/REMODEL">
+  <UseCaseModel>
+    <uc name="processSale"/>
+    <uc name="openCashDesk"/>
+    <uc name="closeCashDesk"/>
+    <uc name="orderProducts"/>
+    <uc name="receiveOrderedProduct"/>
+    <uc name="showStockReports"/>
+    <uc name="changePrice"/>
+    <uc name="closeStore"/>
+    <uc name="listSuppliers"/>
+    <uc name="openStore"/>
+    <uc name="manageStore"/>
+    <uc name="manageProductCatalog"/>
+    <uc name="manageCashDesk"/>
+    <uc name="manageCashier"/>
+    <uc name="manageItem"/>
+    <uc name="manageSupplier"/>
+    <actor name="Cashier" uc="//@UseCaseModel/@uc.0 //@UseCaseModel/@uc.1 //@UseCaseModel/@uc.2"/>
+    <actor name="Administrator" uc="//@UseCaseModel/@uc.10 //@UseCaseModel/@uc.11 //@UseCaseModel/@uc.12 //@UseCaseModel/@uc.13 //@UseCaseModel/@uc.14 //@UseCaseModel/@uc.15"/>
+    <actor name="StoreManager" uc="//@UseCaseModel/@uc.3 //@UseCaseModel/@uc.4 //@UseCaseModel/@uc.5 //@UseCaseModel/@uc.6 //@UseCaseModel/@uc.8 //@UseCaseModel/@uc.9 //@UseCaseModel/@uc.7"/>
+    <interaction name="processSale" participants="//@UseCaseModel/@service.0 //@UseCaseModel/@actor.0">
+      <messages xsi:type="rEMODEL:CallMessage" name="makeCardPayment" receivingEnd="//@UseCaseModel/@interaction.0/@ends.5" op="//@UseCaseModel/@service.0/@operation.0"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="makeCashPayment" receivingEnd="//@UseCaseModel/@interaction.0/@ends.6" op="//@UseCaseModel/@service.0/@operation.1"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="makeNewSale" receivingEnd="//@UseCaseModel/@interaction.0/@ends.7" op="//@UseCaseModel/@service.0/@operation.2"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="endSale" receivingEnd="//@UseCaseModel/@interaction.0/@ends.8" op="//@UseCaseModel/@service.0/@operation.3"/>
+      <messages xsi:type="rEMODEL:CallMessage" name="enterItem" receivingEnd="//@UseCaseModel/@interaction.0/@ends.9" op="//@UseCaseModel/@service.0/@operation.4"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="makeCardPayment" invocationMessage="//@UseCaseModel/@interaction.0/@messages.0"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="makeCashPayment" invocationMessage="//@UseCaseModel/@interaction.0/@messages.1"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="makeNewSale" invocationMessage="//@UseCaseModel/@interaction.0/@messages.2"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="endSale" invocationMessage="//@UseCaseModel/@interaction.0/@messages.3"/>
+      <messages xsi:type="rEMODEL:ReturnMessage" name="enterItem" invocationMessage="//@UseCaseModel/@interaction.0/@messages.4"/>
+      <executions name="makeCardPayment" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.5" end="//@UseCaseModel/@interaction.0/@ends.0"/>
+      <executions name="makeCashPayment" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.6" end="//@UseCaseModel/@interaction.0/@ends.1"/>
+      <executions name="makeNewSale" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.7" end="//@UseCaseModel/@interaction.0/@ends.2"/>
+      <executions name="endSale" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.8" end="//@UseCaseModel/@interaction.0/@ends.3"/>
+      <executions name="enterItem" owner="//@UseCaseModel/@service.0" start="//@UseCaseModel/@interaction.0/@ends.9" end="//@UseCaseModel/@interaction.0/@ends.4"/>
+      <combinedFragments name="paymentMethodAltalt" operator="alt" coveredParticipants="//@UseCaseModel/@actor.0" finish="//@UseCaseModel/@interaction.0/@ends.20">
+        <ownedOperands name="cash"/>
+        <ownedOperands name="card"/>
+      </combinedFragments>
+      <combinedFragments name="enterItemLooploop" operator="loop" coveredParticipants="//@UseCaseModel/@actor.0" finish="//@UseCaseModel/@interaction.0/@ends.21">
+        <ownedOperands name="hasMoreItems"/>
+      </combinedFragments>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="makeCardPaymentFinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="makeCashPaymentFinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="makeNewSaleFinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="endSaleFinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="enterItemFinishEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="makeCardPaymentStartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="makeCashPaymentStartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="makeNewSaleStartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="endSaleStartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:ExecutionEnd" name="enterItemStartEnd" context="//@UseCaseModel/@service.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="makeCardPaymentReturnReceivingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="makeCashPaymentReturnReceivingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="makeNewSaleReturnReceivingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="endSaleReturnReceivingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="enterItemReturnReceivingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="makeCardPaymentSendingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="makeCashPaymentSendingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="makeNewSaleSendingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="endSaleSendingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:MessageEnd" name="enterItemSendingEnd" context="//@UseCaseModel/@actor.0"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="paymentMethodAltaltFinishEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="enterItemLooploopFinishEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="paymentMethodAltaltStartEnd"/>
+      <ends xsi:type="rEMODEL:CombinedFragmentEnd" name="enterItemLooploopStartEnd"/>
+      <ends xsi:type="rEMODEL:OperandEnd" name="cashEnd"/>
+      <ends xsi:type="rEMODEL:OperandEnd" name="cardEnd"/>
+      <ends xsi:type="rEMODEL:OperandEnd" name="hasMoreItemsEnd"/>
+    </interaction>
+    <interaction name="orderProducts" participants="//@UseCaseModel/@service.1 //@UseCaseModel/@actor.2"/>
+    <interaction name="showStockReports" participants="//@UseCaseModel/@service.2 //@UseCaseModel/@actor.2"/>
+    <interaction name="manageStore" participants="//@UseCaseModel/@service.3 //@UseCaseModel/@actor.1"/>
+    <interaction name="manageProductCatalog" participants="//@UseCaseModel/@service.4 //@UseCaseModel/@actor.1"/>
+    <interaction name="manageCashDesk" participants="//@UseCaseModel/@service.5 //@UseCaseModel/@actor.1"/>
+    <interaction name="manageCashier" participants="//@UseCaseModel/@service.6 //@UseCaseModel/@actor.1"/>
+    <interaction name="manageItem" participants="//@UseCaseModel/@service.7 //@UseCaseModel/@actor.1"/>
+    <interaction name="manageSupplier" participants="//@UseCaseModel/@service.8 //@UseCaseModel/@actor.1"/>
+    <service name="ProcessSaleService">
+      <operation name="makeCardPayment">
+        <parameter name="cardAccountNumber"/>
+        <parameter name="expiryDate"/>
+        <parameter name="fee"/>
+      </operation>
+      <operation name="makeCashPayment">
+        <parameter name="amount"/>
+      </operation>
+      <operation name="makeNewSale"/>
+      <operation name="endSale"/>
+      <operation name="enterItem">
+        <parameter name="barcode"/>
+        <parameter name="quantity"/>
+      </operation>
+      <temp_property name="CurrentSaleLine">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Integer"/>
+      </temp_property>
+      <temp_property name="CurrentSale">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </temp_property>
+      <temp_property name="CurrentPaymentMethod">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Boolean"/>
+      </temp_property>
+    </service>
+    <service name="CoCoMEOrderProducts">
+      <operation name="makeNewOrder">
+        <parameter name="orderid"/>
+      </operation>
+      <operation name="listAllOutOfStoreProducts"/>
+      <operation name="orderItem">
+        <parameter name="barcode"/>
+        <parameter name="quantity"/>
+      </operation>
+      <operation name="chooseSupplier">
+        <parameter name="supplierID"/>
+      </operation>
+      <operation name="placeOrder"/>
+      <temp_property name="CurrentOrderProduct">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </temp_property>
+    </service>
+    <service name="CoCoMESystem">
+      <operation name="changePrice">
+        <parameter name="barcode"/>
+        <parameter name="newPrice"/>
+      </operation>
+      <operation name="receiveOrderedProduct">
+        <parameter name="orderID"/>
+      </operation>
+      <operation name="openCashDesk">
+        <parameter name="cashDeskID"/>
+      </operation>
+      <operation name="closeCashDesk">
+        <parameter name="cashDeskID"/>
+      </operation>
+      <operation name="openStore">
+        <parameter name="storeID"/>
+      </operation>
+      <operation name="closeStore">
+        <parameter name="storeID"/>
+      </operation>
+      <operation name="listSuppliers"/>
+      <operation name="showStockReports"/>
+      <temp_property name="CurrentCashDesk">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </temp_property>
+      <temp_property name="CurrentStore">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </temp_property>
+    </service>
+    <service name="ManageStoreCRUDService">
+      <operation name="createStore">
+        <parameter name="id"/>
+        <parameter name="name"/>
+        <parameter name="isopened"/>
+      </operation>
+      <operation name="queryStore">
+        <parameter name="id"/>
+      </operation>
+      <operation name="modifyStore">
+        <parameter name="id"/>
+        <parameter name="name"/>
+        <parameter name="isopened"/>
+      </operation>
+      <operation name="deleteStore">
+        <parameter name="id"/>
+      </operation>
+    </service>
+    <service name="ManageProductCatalogCRUDService">
+      <operation name="createProductCatalog">
+        <parameter name="id"/>
+        <parameter name="name"/>
+      </operation>
+      <operation name="queryProductCatalog">
+        <parameter name="id"/>
+      </operation>
+      <operation name="modifyProductCatalog">
+        <parameter name="id"/>
+        <parameter name="name"/>
+      </operation>
+      <operation name="deleteProductCatalog">
+        <parameter name="id"/>
+      </operation>
+    </service>
+    <service name="ManageCashDeskCRUDService">
+      <operation name="createCashDesk">
+        <parameter name="id"/>
+        <parameter name="name"/>
+        <parameter name="isopened"/>
+      </operation>
+      <operation name="queryCashDesk">
+        <parameter name="id"/>
+      </operation>
+      <operation name="modifyCashDesk">
+        <parameter name="id"/>
+        <parameter name="name"/>
+        <parameter name="isopened"/>
+      </operation>
+      <operation name="deleteCashDesk">
+        <parameter name="id"/>
+      </operation>
+    </service>
+    <service name="ManageCashierCRUDService">
+      <operation name="createCashier">
+        <parameter name="id"/>
+        <parameter name="name"/>
+      </operation>
+      <operation name="queryCashier">
+        <parameter name="id"/>
+      </operation>
+      <operation name="modifyCashier">
+        <parameter name="id"/>
+      </operation>
+      <operation name="deleteCashier">
+        <parameter name="id"/>
+      </operation>
+    </service>
+    <service name="ManageItemCRUDService">
+      <operation name="createItem">
+        <parameter name="barcode"/>
+        <parameter name="price"/>
+        <parameter name="stocknumber"/>
+        <parameter name="orderprice"/>
+      </operation>
+      <operation name="queryItem"/>
+      <operation name="modifyItem">
+        <parameter name="barcode"/>
+        <parameter name="name"/>
+        <parameter name="price"/>
+        <parameter name="stocknumber"/>
+        <parameter name="orderprice"/>
+      </operation>
+      <operation name="deleteItem">
+        <parameter name="barcode"/>
+      </operation>
+    </service>
+    <service name="ManageSupplierCRUDService">
+      <operation name="createSupplier">
+        <parameter name="id"/>
+        <parameter name="name"/>
+      </operation>
+      <operation name="querySupplier">
+        <parameter name="id"/>
+      </operation>
+      <operation name="modifySupplier">
+        <parameter name="id"/>
+        <parameter name="name"/>
+      </operation>
+      <operation name="deleteSupplier">
+        <parameter name="id"/>
+      </operation>
+    </service>
+  </UseCaseModel>
+  <DomainModel>
+    <entity name="Payment">
+      <attributes name="AmountTendered">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+      <reference name="BelongedSale" isAggregation="true"/>
+    </entity>
+    <entity name="Sale">
+      <attributes name="Time">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="IsComplete">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Boolean"/>
+      </attributes>
+      <attributes name="Amount">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+      <attributes name="IsReadytoPay">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Boolean"/>
+      </attributes>
+      <reference name="AssoicatedPayment" entity="//@DomainModel/@entity.0" isAggregation="true"/>
+      <reference name="BelongedCashDesk" isAggregation="true"/>
+      <reference name="Belongedstore" isAggregation="true"/>
+      <reference name="ContainedSalesLine" isAggregation="true"/>
+    </entity>
+    <entity name="Store">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Address">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="IsOpened">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Boolean"/>
+      </attributes>
+      <reference name="Sales" entity="//@DomainModel/@entity.1" isAggregation="true"/>
+      <reference name="AssociationCashdeskes" isAggregation="true"/>
+      <reference name="BelongedCatalog" isAggregation="true"/>
+      <reference name="Cashiers" isAggregation="true"/>
+      <reference name="Items" isAggregation="true"/>
+    </entity>
+    <entity name="ProductCatalog">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <reference name="ContainedItems" isAggregation="true"/>
+    </entity>
+    <entity name="CardPayment">
+      <attributes name="Balance">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+    </entity>
+    <entity name="CashPayment">
+      <attributes name="CardAccountNumber">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="ExpiryDate">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+    </entity>
+    <entity name="Supplier">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+    </entity>
+    <entity name="OrderProduct">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Time">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="OrderStatus">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Amount">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+      <reference name="ContainedEntries" isAggregation="true"/>
+      <reference name="Supplier" entity="//@DomainModel/@entity.6" isAggregation="true"/>
+    </entity>
+    <entity name="OrderEntry">
+      <attributes name="Quantity">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="SubAmount">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+      <reference name="Item" isAggregation="true"/>
+    </entity>
+    <entity name="Item">
+      <attributes name="Barcode">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Price">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+      <attributes name="StockNumber">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="OrderPrice">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+      <reference name="BelongedCatalog" entity="//@DomainModel/@entity.3" isAggregation="true"/>
+    </entity>
+    <entity name="CashDesk">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="IsOpened">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Boolean"/>
+      </attributes>
+      <reference name="ContainedSales" entity="//@DomainModel/@entity.1" isAggregation="true"/>
+      <reference name="BelongedStore" entity="//@DomainModel/@entity.2" isAggregation="true"/>
+    </entity>
+    <entity name="SalesLineItem">
+      <attributes name="Quantity">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Subamount">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="Real"/>
+      </attributes>
+      <reference name="BelongedSale" entity="//@DomainModel/@entity.1" isAggregation="true"/>
+      <reference name="BelongedItem" entity="//@DomainModel/@entity.9" isAggregation="true"/>
+    </entity>
+    <entity name="Cashier">
+      <attributes name="Id">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <attributes name="Name">
+        <type xsi:type="rEMODEL:PrimitiveTypeCS" name="String"/>
+      </attributes>
+      <reference name="WorkedStore" entity="//@DomainModel/@entity.2" isAggregation="true"/>
+    </entity>
+  </DomainModel>
+</rEMODEL:RequirementModel>

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problemframes:ProblemFrames xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:problemframes="http://www.gxnu.edu.re/problemframes">
+  <domain name="   LibrarySystem" t2="machine"/>
+  <domain name="Student" isClass="true" isActor="true" t1="biddable" descriptionReference="//@description.7"/>
+  <domain name="Administrator" isClass="true" isActor="true" t1="biddable" descriptionReference="//@description.0"/>
+  <domain name="Book" isClass="true" descriptionReference="//@description.1"/>
+  <domain name="Scheduler" isActor="true" t1="lexical"/>
+  <domain name="Reserve" isClass="true" descriptionReference="//@description.6"/>
+  <domain name="Faculty" isClass="true" isActor="true" t1="biddable" descriptionReference="//@description.8"/>
+  <domain name="User" isClass="true" isActor="true" t1="biddable" descriptionReference="//@description.9"/>
+  <domain name="BookCopy" isClass="true" descriptionReference="//@description.5"/>
+  <domain name="Subject" isClass="true" descriptionReference="//@description.2"/>
+  <domain name="Librarian" isClass="true" isActor="true" descriptionReference="//@description.4"/>
+  <domain name="Loan" isClass="true" descriptionReference="//@description.10"/>
+  <domain name="RecommendBook" isClass="true" descriptionReference="//@description.3"/>
+  <domain name="Bookshelf"/>
+  <domain name="ThirdPartSystem" isActor="true"/>
+  <requirement name="borrowBook" isUseCase="true"/>
+  <requirement name="renewBook" isUseCase="true"/>
+  <requirement name="payOverDueFee" isUseCase="true"/>
+  <requirement name="returnBook" isUseCase="true"/>
+  <requirement name="listRecommendBook" isUseCase="true"/>
+  <requirement name="manageUser" isUseCase="true" service="ManageUserCRUDService"/>
+  <requirement name="manageBook" isUseCase="true" service="ManageBookCRUDService"/>
+  <requirement name="manageSubject" isUseCase="true" service="ManageSubjectCRUDService"/>
+  <requirement name="dueSoonNotification" isUseCase="true"/>
+  <requirement name="manageLibrarian" isUseCase="true" service="ManageLibrarianCRUDService"/>
+  <requirement name="manageBookCopy" isUseCase="true" service="ManageBookCopyCRUDService"/>
+  <requirement name="checkOverDueandComputeOverDueFee" isUseCase="true"/>
+  <requirement name="countDownSuspensionDay" isUseCase="true"/>
+  <requirement name="searchBook" isUseCase="true" service="SearchBook"/>
+  <requirement name="listBookHistory" isUseCase="true" service="ListBookHistory"/>
+  <requirement name="makeReservation" isUseCase="true"/>
+  <requirement name="recommendBook" isUseCase="true"/>
+  <requirement name="cancelReservation" isUseCase="true"/>
+  <requirement name="ThirdParty" isUseCase="true" service="ThirdPartyServices"/>
+  <requirement name="LibraryManagement" isUseCase="true" service="LibraryManagementSystemSystem"/>
+  <interface name="n" targetDomain="//@domain.12" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Event" name="searchBookByBarcode" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Event" name="searchBookByTitle" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Event" name="searchBookByAuthor" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Event" name="searchBookByISBN" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Event" name="searchBookBySubject" ascription="//@requirement.13"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.0/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="title" belong="//@interface.0/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="authorname" belong="//@interface.0/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="iSBNnumber" belong="//@interface.0/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="subject" belong="//@interface.0/@phenomenon.4"/>
+  </interface>
+  <interface name="k" targetDomain="//@domain.9" sourceDomain="//@domain.3">
+    <phenomenon xsi:type="problemframes:Relation" name="Subject" observed="//@domain.3" controlled="//@domain.9"/>
+    <phenomenon xsi:type="problemframes:Event" name="createSubject" ascription="//@requirement.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="querySubject" ascription="//@requirement.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifySubject" ascription="//@requirement.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteSubject"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.1/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.1/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.1/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.1/@phenomenon.4"/>
+  </interface>
+  <interface name="p" targetDomain="//@domain.12" sourceDomain="//@domain.7">
+    <phenomenon xsi:type="problemframes:Relation" name="RecommendedBook" observed="//@domain.7" controlled="//@domain.12"/>
+    <phenomenon xsi:type="problemframes:Relation" name="RecommendUser" observed="//@domain.12" controlled="//@domain.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="listBorrowHistory" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Event" name="listHodingBook" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Event" name="listOverDueBook" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Event" name="listReservationBook" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Event" name="listRecommendBook" ascription="//@requirement.14"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.2/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.2/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.2/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.2/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.2/@phenomenon.5"/>
+  </interface>
+  <interface name="e" targetDomain="//@domain.7" sourceDomain="//@domain.1"/>
+  <interface name="q" targetDomain="//@domain.7" sourceDomain="//@domain.5">
+    <phenomenon xsi:type="problemframes:Relation" name="ReservedBook" observed="//@domain.7" controlled="//@domain.5"/>
+    <phenomenon xsi:type="problemframes:Relation" name="ReservedUser" observed="//@domain.5" controlled="//@domain.7"/>
+  </interface>
+  <interface name="s" targetDomain="//@domain.7" sourceDomain="//@domain.11">
+    <phenomenon xsi:type="problemframes:Relation" name="LoanedBook" observed="//@domain.7" controlled="//@domain.11"/>
+    <phenomenon xsi:type="problemframes:Relation" name="LoanedUser" observed="//@domain.11" controlled="//@domain.7"/>
+    <phenomenon xsi:type="problemframes:Event" name="createUser" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryUser" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyUser" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteUser" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="createStudent" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="createFaculty" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyStudent" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyFaculty" ascription="//@requirement.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="userid" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="sex" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="email" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="faculty" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="loanednumber" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="borrowstatus" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="suspensiondays" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="overduefee" belong="//@interface.5/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="userid" belong="//@interface.5/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="userid" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="sex" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="email" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="faculty" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="loanednumber" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="borrowstatus" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="suspensiondays" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="overduefee" belong="//@interface.5/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="userid" belong="//@interface.5/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="userID" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="sex" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="email" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="faculty" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="major" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="programme" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="registrationStatus" belong="//@interface.5/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="userID" belong="//@interface.5/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.5/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="sex"/>
+    <phenomenon xsi:type="problemframes:Value" name="email" belong="//@interface.5/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.5/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="faculty" belong="//@interface.5/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="position" belong="//@interface.5/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="status" belong="//@interface.5/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="userID" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="sex" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="email" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="faculty" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="major" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="programme" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="registrationStatus" belong="//@interface.5/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="userID" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="sex" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="email" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="faculty" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="major" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="position" belong="//@interface.5/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="status" belong="//@interface.5/@phenomenon.9"/>
+  </interface>
+  <interface name="h" targetDomain="//@domain.11" sourceDomain="//@domain.10">
+    <phenomenon xsi:type="problemframes:Relation" name="ReturnLibrarian" observed="//@domain.11" controlled="//@domain.10"/>
+    <phenomenon xsi:type="problemframes:Relation" name="LoanLibrarian" observed="//@domain.11" controlled="//@domain.10"/>
+    <phenomenon xsi:type="problemframes:Event"/>
+    <phenomenon xsi:type="problemframes:Event"/>
+    <phenomenon xsi:type="problemframes:Event"/>
+    <phenomenon xsi:type="problemframes:Event"/>
+    <phenomenon xsi:type="problemframes:Event"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+    <phenomenon xsi:type="problemframes:Value"/>
+  </interface>
+  <interface name="f" targetDomain="//@domain.6" sourceDomain="//@domain.7"/>
+  <interface name="c" targetDomain="//@domain.0" sourceDomain="//@domain.4"/>
+  <interface name="a" targetDomain="//@domain.0" sourceDomain="//@domain.2"/>
+  <interface name="g" targetDomain="//@domain.10" sourceDomain="//@domain.0">
+    <phenomenon xsi:type="problemframes:Event" name="recommendBook" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryBookCopy" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="addBookCopy" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteBookCopy" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="makeReservation" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="cancelReservation" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="borrowBook" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="renewBook" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="returnBook" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="payOverDueFee" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="checkOverDueandComputeOverDueFee" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="dueSoonNotification" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Event" name="countDownSuspensionDay" ascription="//@requirement.19"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="callNo" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="title" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="edition" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="author" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="publisher" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="description" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="isbn" belong="//@interface.10/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="callNo" belong="//@interface.10/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="location" belong="//@interface.10/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.10/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.10/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.10/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.10/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.7"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.10/@phenomenon.8"/>
+    <phenomenon xsi:type="problemframes:Value" name="uid" belong="//@interface.10/@phenomenon.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="fee" belong="//@interface.10/@phenomenon.9"/>
+  </interface>
+  <interface name="d" targetDomain="//@domain.7" sourceDomain="//@domain.0">
+    <phenomenon xsi:type="problemframes:Event" name="createBook" ascription="//@requirement.6"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryBook" ascription="//@requirement.6"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyBook" ascription="//@requirement.6"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteBook" ascription="//@requirement.6"/>
+    <phenomenon xsi:type="problemframes:Value" name="callno" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="callno" belong="//@interface.11/@phenomenon.1"/>
+    <phenomenon xsi:type="problemframes:Value" name="callno" belong="//@interface.11/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="callno" belong="//@interface.11/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="title" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="edition" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="author" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="publisher" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="description" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="isbn" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="copynum" belong="//@interface.11/@phenomenon.0"/>
+    <phenomenon xsi:type="problemframes:Value" name="copynum" belong="//@interface.11/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="isbn" belong="//@interface.11/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="description" belong="//@interface.11/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="publisher" belong="//@interface.11/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="author" belong="//@interface.11/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="edition" belong="//@interface.11/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="title" belong="//@interface.11/@phenomenon.2"/>
+  </interface>
+  <interface name="m" targetDomain="//@domain.8" sourceDomain="//@domain.11">
+    <phenomenon xsi:type="problemframes:Relation" name="LoanedRecord" observed="//@domain.8" controlled="//@domain.11"/>
+    <phenomenon xsi:type="problemframes:Relation" name="LoanedCopy" observed="//@domain.11" controlled="//@domain.8"/>
+    <phenomenon xsi:type="problemframes:Event" name="createLibrarian" ascription="//@requirement.9"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryLibrarian" ascription="//@requirement.9"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyLibrarian" ascription="//@requirement.9"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteLibrarian" ascription="//@requirement.9"/>
+    <phenomenon xsi:type="problemframes:Value" name="librarianid" belong="//@interface.12/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="librarianid" belong="//@interface.12/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="librarianid" belong="//@interface.12/@phenomenon.5"/>
+    <phenomenon xsi:type="problemframes:Value" name="librarianid" belong="//@interface.12/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.12/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="name" belong="//@interface.12/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.12/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="password" belong="//@interface.12/@phenomenon.2"/>
+  </interface>
+  <interface name="r" targetDomain="//@domain.5" sourceDomain="//@domain.8">
+    <phenomenon xsi:type="problemframes:Relation" name="ReservationRecord" observed="//@domain.8" controlled="//@domain.5"/>
+    <phenomenon xsi:type="problemframes:Relation" name="ReservedCopy" observed="//@domain.5" controlled="//@domain.8"/>
+  </interface>
+  <interface name="l" targetDomain="//@domain.3" sourceDomain="//@domain.8">
+    <phenomenon xsi:type="problemframes:Relation" name="BookBelongs" observed="//@domain.8" controlled="//@domain.3"/>
+    <phenomenon xsi:type="problemframes:Relation" name="Copys" observed="//@domain.3" controlled="//@domain.8"/>
+    <phenomenon xsi:type="problemframes:Event" name="addBookCopy2" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="queryBookCopy2" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="modifyBookCopy" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Event" name="deleteBookCopy2" ascription="//@requirement.10"/>
+    <phenomenon xsi:type="problemframes:Value" name="callNo" belong="//@interface.14/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="location" belong="//@interface.14/@phenomenon.2"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.3"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="status" belong="//@interface.14/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="location" belong="//@interface.14/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="isreserved" belong="//@interface.14/@phenomenon.4"/>
+    <phenomenon xsi:type="problemframes:Value" name="barcode" belong="//@interface.14/@phenomenon.5"/>
+  </interface>
+  <interface name="i" targetDomain="//@domain.13" sourceDomain="//@domain.10"/>
+  <interface name="j" targetDomain="//@domain.9" sourceDomain="//@domain.13"/>
+  <interface name="b" targetDomain="//@domain.0" sourceDomain="//@domain.14">
+    <phenomenon xsi:type="problemframes:Event" name="sendNotificationEmail" ascription="//@requirement.18"/>
+  </interface>
+  <interface name="w" targetDomain="//@domain.9" sourceDomain="//@domain.9">
+    <phenomenon xsi:type="problemframes:Relation" name="SubSubject" observed="//@domain.9" controlled="//@domain.9"/>
+  </interface>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.3" reference="//@domain.10"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.2" reference="//@domain.10"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.1" reference="//@domain.10"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.0" reference="//@domain.10"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.8" reference="//@domain.4"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.11" reference="//@domain.4"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.4" reference="//@domain.2"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.5" reference="//@domain.2"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.6" reference="//@domain.2"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.7" reference="//@domain.2"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.10" reference="//@domain.2"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.9" reference="//@domain.2"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.12" reference="//@domain.4"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.13" reference="//@domain.7"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.14" reference="//@domain.7"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.15" reference="//@domain.7"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.16" reference="//@domain.7"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.17" reference="//@domain.7"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.18" reference="//@domain.14"/>
+  <reference xsi:type="problemframes:RequirementReference" source="//@requirement.19" reference="//@domain.10"/>
+  <description name="Administrator Information">
+    <domainAttribute type="String" name="AdminID"/>
+    <domainAttribute type="String" name="UserName"/>
+    <domainAttribute type="String" name="Password"/>
+  </description>
+  <description name="  Book Information">
+    <domainAttribute type="String" name="CallNo"/>
+    <domainAttribute type="String" name="Title"/>
+    <domainAttribute type="String" name="Edition"/>
+    <domainAttribute type="String" name="Author"/>
+    <domainAttribute type="String" name="Publisher"/>
+    <domainAttribute type="String" name="Description"/>
+    <domainAttribute type="String" name="ISBn"/>
+    <domainAttribute name="CopyNum"/>
+  </description>
+  <description name="Subject Information">
+    <domainAttribute type="String" name="Name"/>
+  </description>
+  <description name="RecommendBook Information">
+    <domainAttribute name="RecommendDate"/>
+  </description>
+  <description name="Librarian Information">
+    <domainAttribute type="String" name="LibrarianID"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="String" name="Password"/>
+  </description>
+  <description name="BookCopy Information">
+    <domainAttribute type="String" name="Barcode"/>
+    <domainAttribute type="String" name="Status"/>
+    <domainAttribute type="String" name="Location"/>
+    <domainAttribute type="Boolean" name="IsReserved"/>
+  </description>
+  <description name="Reserve Information">
+    <domainAttribute name="ReserveDate"/>
+    <domainAttribute type="Boolean" name="IsReserveClosed"/>
+  </description>
+  <description name="Student Information">
+    <domainAttribute type="String" name="Major"/>
+    <domainAttribute name="Programme"/>
+    <domainAttribute name="RegistrationStatus"/>
+  </description>
+  <description name="Faculty Inforamation">
+    <domainAttribute type="String" name="Position"/>
+    <domainAttribute type="String" name="Status"/>
+  </description>
+  <description name="User Information">
+    <domainAttribute name="UserID"/>
+    <domainAttribute type="String" name="Name"/>
+    <domainAttribute type="Boolean" name="Sex"/>
+    <domainAttribute type="String" name="Password"/>
+    <domainAttribute type="String" name="Email"/>
+    <domainAttribute type="String" name="Faculty"/>
+    <domainAttribute name="LoanedNumber"/>
+    <domainAttribute type="String" name="BorrowStatus"/>
+    <domainAttribute name="SuspensionDays"/>
+    <domainAttribute type="Real" name="OverDueFee"/>
+  </description>
+  <description name="Loan Information">
+    <domainAttribute name="LoanDate"/>
+    <domainAttribute name="RenewDate"/>
+    <domainAttribute name="DueDate"/>
+    <domainAttribute name="ReturnDate"/>
+    <domainAttribute name="RenewedTimes"/>
+    <domainAttribute type="Boolean" name="IsReturned"/>
+    <domainAttribute type="Real" name="OverDueFee"/>
+    <domainAttribute type="Boolean" name="OverDue3Days"/>
+    <domainAttribute type="Boolean" name="OverDue10Days"/>
+    <domainAttribute type="Boolean" name="OverDue17Days"/>
+    <domainAttribute type="Boolean" name="OverDue31Days"/>
+  </description>
+</problemframes:ProblemFrames>
