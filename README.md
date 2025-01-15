@@ -1,1 +1,63 @@
-# PF2UML
+# PF2UML: Problem-Oriented Requirements Modeling and Transformation Tool
+
+[![Demo Video](https://img.shields.io/badge/Demo-YouTube-red)](https://www.youtube.com/watch?v=ydtA1V8G4Ok) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+## Project Overview
+
+**PF2UML** is a tool designed to enhance the software development process by bridging the gap between requirements modeling and system design. Based on the **Problem Frames** theory, it addresses common challenges in transitioning from requirements analysis to system design, such as ambiguity in requirements expression, understanding deviations, and inefficiencies caused by manual operations. By providing automated and modeling support, PF2UML significantly improves the efficiency of requirements modeling and UML model generation.
+
+---
+
+## Key Features
+
+1. **Problem-Oriented Requirements Modeling and Analysis**  
+   PF2UML provides a visual platform based on **Problem Frames** theory to support the modeling and validation of system requirements, enhancing accuracy and communication among stakeholders.
+
+2. **Automatic UML Model Generation**  
+   PF2UML automatically transforms problem frame models into UML models (including class diagrams, use case diagrams, service diagrams, and system sequence diagrams), offering a clear blueprint for system design.
+
+3. **Requirements Refinement and Decomposition**  
+   PF2UML systematically refines high-level system requirements into software requirements, ensuring consistency and traceability throughout the development process.
+
+---
+
+## Use Cases
+
+PF2UML is suitable for the following scenarios:
+- **Complex System Requirements Modeling**: Supports the decomposition, validation, and visualization of requirements.
+- **Automated UML Transformation**: Quickly generates UML diagrams from requirements models to accelerate design processes.
+- **End-to-End Support from Requirements to Design**: Ensures consistency and traceability from system requirements to software design.
+
+---
+
+## Highlights
+
+- **Significant Efficiency Gains**  
+  - Requirements modeling efficiency improved by 34%.  
+  - Model transformation time reduced from **minutes** to **seconds**.
+- **Support for Complex Scenarios**  
+  - Over 10x efficiency improvement in complex scenarios.
+- **Ensures Consistency and Traceability**  
+  - Guarantees seamless alignment from requirements modeling to system design.
+
+---
+
+## System Requirements
+
+- **Minimum Requirements**:
+  - CPU: 3.5 GHz Intel Core i7
+  - Memory: 16 GB DDR4
+  - JDK: 11+
+- **Development Frameworks**:
+  - Eclipse Modeling Framework (EMF)
+  - Sirius
+  - Atlas Transformation Language (ATL)
+
+---
+
+## Quick Start
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Hongbin-Xiao/PF2UML.git
+   cd PF2UML
