@@ -1,7 +1,7 @@
 # PF2UML: Problem-Oriented Requirements Modeling and Transformation Tool
 
 [![Demo Video](https://img.shields.io/badge/Demo-YouTube-red)](https://www.youtube.com/watch?v=ydtA1V8G4Ok) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
+[![Demo Video](https://img.shields.io/badge/Demo-Bilibili-pink)](https://www.bilibili.com/video/BV1EKwReLEPk/)
 ## Project Overview
 
 <p align="center">
