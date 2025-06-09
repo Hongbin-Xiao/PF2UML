@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PF到UML属性映射表</title>
+  <style>
+      body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 20px;
+          background-color: #f5f5f5;
+      }
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+      h1 {
+          color: #2c3e50;
+          text-align: center;
+          margin-bottom: 30px;
+          border-bottom: 3px solid #3498db;
+          padding-bottom: 10px;
+      }
+      h2 {
+          color: #34495e;
+          margin-top: 30px;
+          margin-bottom: 15px;
+          padding: 10px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          border-radius: 5px;
+      }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      th {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 12px;
+          text-align: left;
+          font-weight: bold;
+      }
+      td {
+          padding: 10px 12px;
+          border-bottom: 1px solid #ddd;
+          vertical-align: top;
+      }
+      tr:nth-child(even) {
+          background-color: #f8f9fa;
+      }
+      tr:hover {
+          background-color: #e3f2fd;
+      }
+      .pf-element {
+          background-color: #e8f5e8;
+          font-weight: bold;
+          color: #2e7d32;
+      }
+      .uml-element {
+          background-color: #fff3e0;
+          font-weight: bold;
+          color: #ef6c00;
+      }
+      .mapping-rule {
+          font-style: italic;
+          color: #666;
+          font-size: 0.9em;
+      }
+      .code {
+          font-family: 'Courier New', monospace;
+          background-color: #f4f4f4;
+          padding: 2px 4px;
+          border-radius: 3px;
+          font-size: 0.9em;
+      }
+      .note {
+          background-color: #fff9c4;
+          border-left: 4px solid #ffc107;
+          padding: 10px;
+          margin: 10px 0;
+          border-radius: 0 4px 4px 0;
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <h1>问题框架模型到UML模型属性映射表</h1>
+      
+      <h2>1. 领域模型映射 (Domain Model Mapping)</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>PF模型元素</th>
+                  <th>PF属性</th>
+                  <th>UML模型元素</th>
+                  <th>UML属性</th>
+                  <th>映射规则</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td class="pf-element">ProblemFrames</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">DomainModel</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">直接映射：PF.name → DM.name</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Domain</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Entity</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：domain.isClass && descriptionReference存在</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Domain</td>
+                  <td><span class="code">descriptionReference.domainAttribute</span></td>
+                  <td class="uml-element">Entity</td>
+                  <td><span class="code">attributes</span></td>
+                  <td class="mapping-rule">集合映射：每个domainAttribute转为Attribute</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Attribute</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Attribute</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">直接映射</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Attribute</td>
+                  <td><span class="code">type</span></td>
+                  <td class="uml-element">Attribute</td>
+                  <td><span class="code">type</span></td>
+                  <td class="mapping-rule">类型映射：Integer/Real/Boolean/String</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Relation</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Reference</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：isReference() && Combined='null'</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Relation</td>
+                  <td><span class="code">controlled.name</span></td>
+                  <td class="uml-element">Reference</td>
+                  <td><span class="code">entity</span></td>
+                  <td class="mapping-rule">引用目标实体</td>
+              </tr>
+          </tbody>
+      </table>
+
+      <h2>2. 用例模型映射 (Use Case Model Mapping)</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>PF模型元素</th>
+                  <th>PF属性</th>
+                  <th>UML模型元素</th>
+                  <th>UML属性</th>
+                  <th>映射规则</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td class="pf-element">ProblemFrames</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">UseCaseModel</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">直接映射</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Requirement</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">UC (UseCase)</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：requirement.isUseCase</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">RQReference</td>
+                  <td><span class="code">isExtend</span></td>
+                  <td class="uml-element">UC</td>
+                  <td><span class="code">UCRelation</span></td>
+                  <td class="mapping-rule">布尔映射：true→'extend', false→'include'</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">RQReference</td>
+                  <td><span class="code">requirementRef</span></td>
+                  <td class="uml-element">UC</td>
+                  <td><span class="code">relateduc</span></td>
+                  <td class="mapping-rule">引用相关用例</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Domain</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Actor</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：domain.isActor</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">RequirementReference</td>
+                  <td><span class="code">reference/source</span></td>
+                  <td class="uml-element">Actor</td>
+                  <td><span class="code">uc</span></td>
+                  <td class="mapping-rule">建立Actor与UC的关联</td>
+              </tr>
+          </tbody>
+      </table>
+
+      <h2>3. 服务模型映射 (Service Model Mapping)</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>PF模型元素</th>
+                  <th>PF属性</th>
+                  <th>UML模型元素</th>
+                  <th>UML属性</th>
+                  <th>映射规则</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td class="pf-element">Requirement</td>
+                  <td><span class="code">service</span></td>
+                  <td class="uml-element">Service</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：service属性存在</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Event</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Operation</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：event.ascription=requirement</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Value</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Parameter</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：value.belong=event</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Value</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Attribute</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：value.ascription=requirement</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Value</td>
+                  <td><span class="code">t1</span></td>
+                  <td class="uml-element">Attribute/Parameter</td>
+                  <td><span class="code">type</span></td>
+                  <td class="mapping-rule">类型映射：Integer/Real/Boolean/String</td>
+              </tr>
+          </tbody>
+      </table>
+
+      <h2>4. 序列模型映射 (Sequence Model Mapping)</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>PF模型元素</th>
+                  <th>PF属性</th>
+                  <th>UML模型元素</th>
+                  <th>UML属性</th>
+                  <th>映射规则</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td class="pf-element">Requirement</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Interaction</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：requirement.isUseCase</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Requirement</td>
+                  <td><span class="code">service</span></td>
+                  <td class="uml-element">Interaction</td>
+                  <td><span class="code">participants</span></td>
+                  <td class="mapping-rule">服务作为参与者</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Phenomenon</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Execution</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：isShared=true</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Phenomenon</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">CallMessage</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">现象转调用消息</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Phenomenon</td>
+                  <td><span class="code">event</span></td>
+                  <td class="uml-element">CallMessage</td>
+                  <td><span class="code">op</span></td>
+                  <td class="mapping-rule">关联到对应操作</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">State</td>
+                  <td><span class="code">name + Combined</span></td>
+                  <td class="uml-element">CombinedFragment</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">条件：Combined='loop'或'alt'</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">State</td>
+                  <td><span class="code">Combined</span></td>
+                  <td class="uml-element">CombinedFragment</td>
+                  <td><span class="code">operator</span></td>
+                  <td class="mapping-rule">操作符映射：loop/alt</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">Role</td>
+                  <td><span class="code">name</span></td>
+                  <td class="uml-element">Operand</td>
+                  <td><span class="code">name</span></td>
+                  <td class="mapping-rule">角色转操作数</td>
+              </tr>
+          </tbody>
+      </table>
+
+      <div class="note">
+          <strong>注意事项：</strong>
+          <ul>
+              <li>映射过程中大量使用OCL的select、collect等集合操作</li>
+              <li>许多映射都有条件限制，如isClass、isActor、isUseCase等</li>
+              <li>复杂的关联关系通过allInstances()跨模型查找建立</li>
+              <li>序列图的端点（End）元素通过命名约定自动生成</li>
+              <li>类型映射统一处理基本数据类型：Integer、Real、Boolean、String</li>
+          </ul>
+      </div>
+
+      <h2>5. 特殊映射规则</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>映射类型</th>
+                  <th>源模式</th>
+                  <th>目标模式</th>
+                  <th>转换逻辑</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td class="pf-element">条件映射</td>
+                  <td>Domain.isClass</td>
+                  <td>Entity创建</td>
+                  <td>只有类型域才转换为实体</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">集合映射</td>
+                  <td>domainAttribute集合</td>
+                  <td>attributes集合</td>
+                  <td>一对多映射，每个属性独立转换</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">引用映射</td>
+                  <td>Relation.isReference()</td>
+                  <td>Reference</td>
+                  <td>同时被观察和控制的关系</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">命名映射</td>
+                  <td>Phenomenon.name</td>
+                  <td>多个End元素</td>
+                  <td>通过后缀区分：StartEnd、FinishEnd等</td>
+              </tr>
+              <tr>
+                  <td class="pf-element">类型映射</td>
+                  <td>PF基本类型</td>
+                  <td>UML基本类型</td>
+                  <td>统一的类型转换规则</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</body>
+</html>
